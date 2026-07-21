@@ -1,0 +1,52 @@
+{
+  "app_name": "DJ Engine",
+  "navigation_type": "stack",
+  "theme_colors": {
+    "primary": "#1DB954",
+    "secondary": "#191414"
+  },
+  "pages": [
+    {
+      "id": "home",
+      "component_name": "HomePage",
+      "title": "Start",
+      "description": "Main landing page with real-time stats (track count, playlist count, analysis %) loaded from AsyncStorage (@dj_playlists_v2) on focus with ActivityIndicator spinner while loading. Top artists shown as folder cards. Quick actions: scan music, select SD card or USB stick, start analysis. Supabase email/password auth (login + signup) via BottomSheet, sign-out from header or auth banner.",
+      "type": "core"
+    },
+    {
+      "id": "folder_browser",
+      "component_name": "FolderBrowserPage",
+      "title": "Ordner",
+      "description": "Reads selected storage path from AsyncStorage (@dj_engine_selected_card). Supports both regular file:// paths and SAF content:// URIs (Android 11+ Samsung). In SAF mode, uses StorageAccessFramework.readDirectoryAsync to browse folders and list music files. Long-press menu: create playlist or add tracks to existing playlist stored in AsyncStorage (@dj_playlists_v2). Engine DJ m.db enrichment (BPM/Camelot) only in file:// mode.",
+      "type": "core"
+    },
+    {
+      "id": "playlist_manager",
+      "component_name": "PlaylistManagerPage",
+      "title": "Playlists",
+      "description": "Create, edit, delete playlists stored in AsyncStorage (@dj_playlists_v2); exports playlists as real M3U8 files (with BPM and Camelot key tags) to Engine Library/Playlists/. SAF content:// track paths (from FolderBrowser SAF mode) are auto-converted to real filesystem paths (/storage/VOLUME/...) before writing the M3U8, so Engine DJ can read them. Supports both direct file:// paths and SAF content:// URIs (Android 11+ Samsung) as export targets — auto-detects URI scheme and uses StorageAccessFramework for SAF targets. Re-uses existing M3U8 file URI on overwrite instead of creating duplicates. Reads @dj_engine_target_type (sd/usb) alongside selected storage path on mount. Status bar icon/color and export button adapt dynamically: green + hardware-chip for SD-Karte, yellow + logo-usb for USB-Stick. Target-selection sheet scans all reachable volumes.",
+      "type": "core"
+    },
+    {
+      "id": "analysis_progress",
+      "component_name": "AnalysisProgressPage",
+      "title": "Analyse",
+      "description": "Reads @dj_engine_selected_card (storage path) and @dj_engine_target_type (sd/usb) from AsyncStorage on mount and on focus. Banner icon, accent color, all label texts and error messages adapt dynamically: green + hardware-chip for SD-Karte, yellow + usb for USB-Stick. Reads BPM, Camelot key and beatgrid data from Engine DJ m.db on the selected medium, shows track list with animated progress indicator and per-track BPM/key badges.",
+      "type": "core"
+    },
+    {
+      "id": "sd_card_selector",
+      "component_name": "SDCardSelectorPage",
+      "title": "Speichermedium wählen",
+      "description": "Scan and select storage volumes (SD card and USB OTG sticks), detect Engine DJ Database2/m.db structure, persist selected path via AsyncStorage. SAF button converts content:// URI to /storage/VOLUME path via extractFilePathFromContentUri, tests accessibility, and stores usable file path instead of raw SAF URI. Manual folder picker (DocumentPicker) similarly converts content URIs. Falls back to storing SAF URI if file path not accessible. Probes 19+ Android paths.",
+      "type": "core"
+    },
+    {
+      "id": "sync_settings",
+      "component_name": "SyncSettingsPage",
+      "title": "Synchronisierung",
+      "description": "Sync-Einstellungen mit Ziel-Auswahl (SD-Karte vs USB-Stick als Segmented-Picker, Präferenz in AsyncStorage). Toggles für Playlists, BPM/Tonart, Camelot-Keys, Beatgrid, Auto-Sync, Überschreiben. Liest Playlists aus AsyncStorage (@dj_playlists_v2) und exportiert M3U8-Dateien nach Engine Library/Playlists/ auf das gewählte Medium. Unterstützt sowohl direkte file://-Pfade als auch SAF content://-URIs (Android 11+ Samsung).",
+      "type": "core"
+    }
+  ]
+}
