@@ -1,0 +1,8 @@
+// Environment Keys - Auto-generated
+
+export const SUPABASE_URL = "https://cyymilrusptsseolrqmk.supabase.co";
+export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eW1pbHJ1c3B0c3Nlb2xycW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyOTkwNTMsImV4cCI6MjA5OTg3NTA1M30.kTWstr0el4uT4G59M6R2qhSA9Jw8T9pKMHoDu719jcs";
+export const SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eW1pbHJ1c3B0c3Nlb2xycW1rIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDI5OTA1MywiZXhwIjoyMDk5ODc1MDUzfQ.jAVldJVuL0w37E7swvUXAI_U7cNg42A8Px3fpH-hUPU";
+export const SUPABASE_DB_PASSWORD = "DJ Engine Denon";
+export const SUPABASE_REGION = "eu-west-2";
+export const SUPABASE_ACCESS_TOKEN = "sbp_oauth_64be3075dc07dde1ceb643a2d2213e58118feea3";

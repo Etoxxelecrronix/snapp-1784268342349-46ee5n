@@ -1,0 +1,59 @@
+{
+  "app_name": "DJ Engine",
+  "navigation_type": "stack",
+  "theme_colors": {
+    "primary": "#1DB954",
+    "secondary": "#191414"
+  },
+  "pages": [
+    {
+      "id": "home",
+      "component_name": "HomePage",
+      "title": "Start",
+      "description": "Main landing page with real-time stats (track count, playlist count, analysis %) loaded from AsyncStorage (@dj_playlists_v2) on focus with ActivityIndicator spinner while loading. Top artists shown as folder cards. Quick actions: scan music, select SD card or USB stick, start analysis. Supabase email/password auth (login + signup) via BottomSheet, sign-out from header or auth banner.",
+      "type": "core"
+    },
+    {
+      "id": "folder_browser",
+      "component_name": "FolderBrowserPage",
+      "title": "Ordner",
+      "description": "Uses utils/MusicScanner.ts for recursive full-library scanning (MP3, FLAC, WAV, AIFF, AAC, M4A, OGG, ALAC) up to 10 directory levels deep. Supports both file:// and SAF content:// URIs. Shows real-time scan progress (tracks found, current directory). Detects new/changed files via AsyncStorage cache (@dj_scan_cache_v3) and marks new tracks with a green NEU badge. Long-press menu: create playlist or add tracks to existing playlist (@dj_playlists_v2). Engine DJ m.db BPM/Camelot enrichment in file:// mode.",
+      "type": "core"
+    },
+    {
+      "id": "playlist_manager",
+      "component_name": "PlaylistManagerPage",
+      "title": "Playlists",
+      "description": "Create, edit, delete playlists stored in AsyncStorage (@dj_playlists_v2); exports playlists as real M3U8 files (with BPM and Camelot key tags) to Engine Library/Playlists/. SAF content:// track paths (from FolderBrowser SAF mode) are auto-converted to real filesystem paths (/storage/VOLUME/...) before writing the M3U8, so Engine DJ can read them. Supports both direct file:// paths and SAF content:// URIs (Android 11+ Samsung) as export targets — auto-detects URI scheme and uses StorageAccessFramework for SAF targets. Re-uses existing M3U8 file URI on overwrite instead of creating duplicates. Reads @dj_engine_target_type (sd/usb) alongside selected storage path on mount. Status bar icon/color and export button adapt dynamically: green + hardware-chip for SD-Karte, yellow + logo-usb for USB-Stick. Target-selection sheet scans all reachable volumes.",
+      "type": "core"
+    },
+    {
+      "id": "analysis_progress",
+      "component_name": "AnalysisProgressPage",
+      "title": "Analyse",
+      "description": "Real audio analysis engine without simulation. Reads folder from @dj_engine_selected_card, recursively scans for audio files, and queues them in utils/AnalysisQueue (3 concurrent workers). WAV/AIFF: full PCM analysis — Cooley-Tukey FFT, onset-detection BPM, autocorrelation beatgrid+downbeats, Krumhansl-Schmuckler key detection (Camelot + Open Key), ITU-R BS.1770 LUFS, RMS, peak, 200-block waveform. MP3: ID3v2 BPM/key metadata + frame-header duration. FLAC: STREAMINFO + Vorbis Comment. Results persisted in AsyncStorage @audio_analysis_v1. Per-track cards show expandable waveform (80 bars), BPM+confidence, tempo stability, key with Camelot/Open Key chips, LUFS/RMS/peak. Overall stats: count, avg BPM, avg LUFS.",
+      "type": "core"
+    },
+    {
+      "id": "sd_card_selector",
+      "component_name": "SDCardSelectorPage",
+      "title": "Speichermedium wählen",
+      "description": "Scan and select storage volumes (SD card and USB OTG sticks), detect Engine DJ Database2/m.db structure, persist selected path via AsyncStorage. SAF button converts content:// URI to /storage/VOLUME path via extractFilePathFromContentUri, tests accessibility, and stores usable file path instead of raw SAF URI. Manual folder picker (DocumentPicker) similarly converts content URIs. Falls back to storing SAF URI if file path not accessible. Probes 19+ Android paths.",
+      "type": "core"
+    },
+    {
+      "id": "library",
+      "component_name": "LibraryPage",
+      "title": "Bibliothek",
+      "description": "Vollständige Musikbibliothek auf expo-sqlite-Basis. Tabs: Tracks (Suche, Long-Press → Playlist hinzufügen), Playlists (erstellen, umbenennen, löschen, Ordner-Import als Playlist), Geräte (Engine-DJ-Volumes erkennen, Import aus m.db, vollständiger Sync mit Tracks+Playlists+M3U8). Unterstützt Denon SC Live 2/3/4, Prime 2/4/4+, Prime Go, SC5000/6000. Automatische Migration aus AsyncStorage-Legacy-Playlists. Tabellen: tracks, playlists, playlist_tracks, cue_points, hot_cues, saved_loops, beatgrids, analysis_results.",
+      "type": "core"
+    },
+    {
+      "id": "sync_settings",
+      "component_name": "SyncSettingsPage",
+      "title": "Synchronisierung",
+      "description": "Sync-Einstellungen mit Ziel-Auswahl (SD-Karte vs USB-Stick als Segmented-Picker, Präferenz in AsyncStorage). Toggles für Playlists, BPM/Tonart, Camelot-Keys, Beatgrid, Auto-Sync, Überschreiben. Liest Playlists aus AsyncStorage (@dj_playlists_v2) und exportiert M3U8-Dateien nach Engine Library/Playlists/ auf das gewählte Medium. Unterstützt sowohl direkte file://-Pfade als auch SAF content://-URIs (Android 11+ Samsung).",
+      "type": "core"
+    }
+  ]
+}
